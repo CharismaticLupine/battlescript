@@ -17,6 +17,8 @@ angular.module('battlescript.dashboard', [])
   $scope.leaderboard = [];
   $scope.challengeClicked = {};
 
+  $scope.joinedTournament = false;
+
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
   ////////////////////////////////////////////////////////////
@@ -94,6 +96,29 @@ angular.module('battlescript.dashboard', [])
   ////////////////////////////////////////////////////////////
   // handle battle requests
   ////////////////////////////////////////////////////////////
+
+  $scope.joinTournament = function($event){
+    $event.preventDefault();
+    $scope.joinedTournament = true;
+
+    $rootScope.dashboardSocket.emit('joinTournament', {
+      user: $scope.username
+    });
+  };
+
+  $scope.leaveTournament = function($event){
+    $event.preventDefault();
+    $scope.joinedTournament = false;
+
+    $rootScope.dashboardSocket.emit('leaveTournament', {
+      user: $scope.username
+    });
+  };
+
+  $rootScope.dashboardSocket.on('message', function(message){
+    console.log(message);
+  });
+
 
   // Open up socket with specific dashboard server handler
   $scope.requestBattle = function($event, opponentUsername) {

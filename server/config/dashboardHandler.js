@@ -1,15 +1,18 @@
 // requirements
 var BattleController = require('../battles/battleController');
 
+var User = require('../users/userModel.js');
+var Q    = require('q');
+
 var socketList = {};
+
+var tournamentPool = {};
 
 module.exports = function(socket, io){
   socket.join('dashboard');
 
   var username = socket.handshake.query.username;
   socketList[username] = socket.id;
-
-  console.log('LINE 11, DASBOARD HANDLER: ', username);
   
   // send signal that user has connected to dashboard
   var updateUsers = function(){
@@ -47,9 +50,36 @@ module.exports = function(socket, io){
     });
   });
 
+
+  /////////////////////////////////////////////////////////
+  //////       tournement matching    /////////////////////
+  /////////////////////////////////////////////////////////
+
+  socket.on('joinTournament', function(userData){
+    var userId = socketList[userData.user];
+    tournamentPool[username] = socket.id;
+
+    console.log(tournamentPool)
+    io.sockets.connected[userId].emit('message', tournamentPool);
+
+  });
+
+  socket.on('leaveTournament', function(userData){
+    var userId = socketList[userData.user];
+    delete tournamentPool[username];
+
+    io.sockets.connected[userId].emit('message', tournamentPool);
+  });
+
+
+  ////////////////////////////////////////////////////////
+  //             disconnect                             //
+  ////////////////////////////////////////////////////////
+
   socket.on('disconnect', function(){
     console.log('SERVER DISCONNECTing DASHBOARD SOCKET');
     delete socketList[username];
+    delete tournamentPool[username];
 
     setTimeout(function() {
       updateUsers();
