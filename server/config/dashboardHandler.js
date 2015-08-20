@@ -60,11 +60,44 @@ module.exports = function(socket, io){
   };
 
   var matchCompetitors = function(){
+    var maxDifference = 5;
     if (tournamentPool.length <= 1){
       // if not enough competitors, return and wait for new users to join
       return false;
     }
     // try to find the most even match
+    var newTournamentPool = tournamentPool.sort(function(a, b){
+      return b.totalWins - a.totalWins; // sort highest to lowest
+    }).filter(function(contender, idx, tournamentPool){
+      var nextContender = tournamentPool[idx + 1];
+
+      // if contender is already matched, don't add to newTournamentPool
+      if(contender.matched){ return false; }
+      // if next contender doesn't exist, don't compare
+      if(!nextContender){ return contender.matched; }
+      // compare each contender to the next contender
+      if(contender.totalWins - nextContender.totalWins <= maxDifference){
+        // TODO: challenge level should not be hard coded
+        BattleController.addBattleRoom(8, function(roomhash) {
+          var contender1 = socketList[nextContender.username],
+              contender2 = socketList[contender.username];
+
+          // broadcast to each contender to prepareForBattle
+          console.log('Match between: ', contender.username, ' and ', nextContender.username, ': ', contender.totalWins - nextContender.totalWins);
+          socket.broadcast.to(contender1).emit('prepareForBattle', {roomhash: roomhash});
+          socket.broadcast.to(contender2).emit('prepareForBattle', {roomhash: roomhash});
+        });
+        // if matched, don't add to newTournamentPool
+        nextContender.matched = true;
+        return false;
+      }
+
+      // if not matched, add to newTournamentPool
+      return true;
+    });
+
+    // replace tournamentPool w/ newTournamentPool (which is missing all matched contenders)
+    tournamentPool = newTournamentPool;
   };
 
   // poll matchCompetitors
@@ -79,9 +112,10 @@ module.exports = function(socket, io){
         totalWins: user.totalWins,
         currentStreak: user.currentStreak,
         longestStreak: user.longestStreak,
-        username: username
+        username: username,
+        matched: false
       });
-      
+
       io.sockets.connected[userId].emit('message', tournamentPool);
     });
 
