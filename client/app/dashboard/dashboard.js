@@ -1,6 +1,6 @@
 angular.module('battlescript.dashboard', [])
 
-.controller('DashboardController', function ($scope, $rootScope, $timeout, Dashboard, Users, Battle) {
+.controller('DashboardController', function ($scope, $rootScope, $timeout, Dashboard, Users, Battle, Tournament) {
   // get current auth username
   $scope.username = Users.getAuthUser();
 
@@ -17,7 +17,6 @@ angular.module('battlescript.dashboard', [])
   $scope.leaderboard = [];
   $scope.challengeClicked = {};
 
-  $scope.joinedTournament = false;
 
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
@@ -94,8 +93,19 @@ angular.module('battlescript.dashboard', [])
   $scope.getLeaderboard();
 
   ////////////////////////////////////////////////////////////
-  // handle battle requests
+  // handle tournament requests
   ////////////////////////////////////////////////////////////
+
+  // initialize joinedTournament as undefined, then ask server if it is true/false
+  $scope.joinedTournament = undefined;
+
+  $rootScope.dashboardSocket.emit('getTournamentStatus')
+  $rootScope.dashboardSocket.on('returnTournamentStatus', function(status){
+    $scope.$apply(function(){
+      $scope.joinedTournament = status;
+    });
+  });
+
 
   $scope.joinTournament = function($event){
     $event.preventDefault();
@@ -115,10 +125,9 @@ angular.module('battlescript.dashboard', [])
     });
   };
 
-  $rootScope.dashboardSocket.on('message', function(message){
-    console.log(message);
-  });
-
+  ////////////////////////////////////////////////////////////
+  // handle battle requests
+  ////////////////////////////////////////////////////////////
 
   // Open up socket with specific dashboard server handler
   $scope.requestBattle = function($event, opponentUsername) {

@@ -1,6 +1,6 @@
 // requirements
 var BattleController = require('../battles/battleController');
-
+var _ = require('underscore');
 var User = require('../users/userModel.js');
 var Q    = require('q');
 
@@ -101,7 +101,7 @@ module.exports = function(socket, io){
   };
 
   // poll matchCompetitors
-  setInterval(matchCompetitors, 5000);
+  // setInterval(matchCompetitors, 5000);
 
   socket.on('joinTournament', function(userData){
     var userId = socketList[userData.user];
@@ -115,8 +115,6 @@ module.exports = function(socket, io){
         username: username,
         matched: false
       });
-
-      io.sockets.connected[userId].emit('message', tournamentPool);
     });
 
 
@@ -128,9 +126,14 @@ module.exports = function(socket, io){
     tournamentPool = tournamentPool.filter(function(user){
       return user.username !== username;
     })
-
-    io.sockets.connected[userId].emit('message', tournamentPool);
   });
+
+  socket.on('getTournamentStatus', function(response){
+    var userId = socketList[username];
+    var status = _.contains(_.pluck(tournamentPool, 'username'), username);
+    console.log('User iD: ', userId, 'username: ', username);
+    io.sockets.connected[userId].emit('returnTournamentStatus', status);
+  })
 
 
   ////////////////////////////////////////////////////////

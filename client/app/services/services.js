@@ -152,6 +152,31 @@ angular.module('battlescript.services', [])
 })
 
 ////////////////////////////////////////////////////////////
+// Tournament factory
+// 
+// A set of reusable functions to handle Tournament functionality
+// on the dashboard
+////////////////////////////////////////////////////////////
+
+.factory('Tournament', function($rootScope){
+  var toggleJoined = function($scope){
+    $scope.joinedTournament = !$scope.joinedTournament;
+  };
+
+  var getTournamentStatus = function(){
+    // get tournament status from server
+  };
+
+  var setTournamentStatus = function($scope){
+    // set tournament status on client
+  };
+
+  return {
+    toggleJoined: toggleJoined
+  }
+})
+
+////////////////////////////////////////////////////////////
 // Notifications factory
 // 
 // A set of reusable functions to handle user notifications
