@@ -1,6 +1,6 @@
 angular.module('battlescript.dashboard', [])
 
-.controller('DashboardController', function ($scope, $rootScope, $timeout, Dashboard, Users, Battle, Tournament) {
+.controller('DashboardController', function ($scope, $rootScope, $timeout, Dashboard, Users, Battle) {
   // get current auth username
   $scope.username = Users.getAuthUser();
 
@@ -48,9 +48,6 @@ angular.module('battlescript.dashboard', [])
   $rootScope.dashboardSocket.on('updateUsers', function(data) {
     //TODO: Online users.
 
-    console.log('NEED TO UPDATE USERS CUZ OF SOME EVENT');
-    console.log(data);
-
     if (data[$scope.username]) {
       delete data[$scope.username];
     }
@@ -86,7 +83,6 @@ angular.module('battlescript.dashboard', [])
     Users.getLeaderboard()
       .then(function(leaderboard){ 
         $scope.leaderboard = leaderboard.data;
-        console.log($scope.leaderboard);
       });
   }
 

@@ -60,11 +60,8 @@ module.exports = function(socket, io){
   };
 
   var matchCompetitors = function(){
-    var maxDifference = 5;
-    if (tournamentPool.length <= 1){
-      // if not enough competitors, return and wait for new users to join
-      return false;
-    }
+    var maxDifference = 10;
+
     // try to find the most even match
     var newTournamentPool = tournamentPool.sort(function(a, b){
       return b.totalWins - a.totalWins; // sort highest to lowest
@@ -74,7 +71,7 @@ module.exports = function(socket, io){
       // if contender is already matched, don't add to newTournamentPool
       if(contender.matched){ return false; }
       // if next contender doesn't exist, don't compare
-      if(!nextContender){ return contender.matched; }
+      if(!nextContender){ return !contender.matched; }
       // compare each contender to the next contender
       if(contender.totalWins - nextContender.totalWins <= maxDifference){
         // TODO: challenge level should not be hard coded
@@ -101,7 +98,7 @@ module.exports = function(socket, io){
   };
 
   // poll matchCompetitors
-  // setInterval(matchCompetitors, 5000);
+  setInterval(matchCompetitors, 5000);
 
   socket.on('joinTournament', function(userData){
     var userId = socketList[userData.user];
@@ -131,7 +128,6 @@ module.exports = function(socket, io){
   socket.on('getTournamentStatus', function(response){
     var userId = socketList[username];
     var status = _.contains(_.pluck(tournamentPool, 'username'), username);
-    console.log('User iD: ', userId, 'username: ', username);
     io.sockets.connected[userId].emit('returnTournamentStatus', status);
   })
 

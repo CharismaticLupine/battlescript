@@ -159,21 +159,7 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Tournament', function($rootScope){
-  var toggleJoined = function($scope){
-    $scope.joinedTournament = !$scope.joinedTournament;
-  };
-
-  var getTournamentStatus = function(){
-    // get tournament status from server
-  };
-
-  var setTournamentStatus = function($scope){
-    // set tournament status on client
-  };
-
-  return {
-    toggleJoined: toggleJoined
-  }
+  // not implemented!!
 })
 
 ////////////////////////////////////////////////////////////
