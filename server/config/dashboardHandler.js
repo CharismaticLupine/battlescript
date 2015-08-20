@@ -6,7 +6,7 @@ var Q    = require('q');
 
 var socketList = {};
 
-var tournamentPool = {};
+var tournamentPool = [];
 
 module.exports = function(socket, io){
   socket.join('dashboard');
@@ -55,18 +55,45 @@ module.exports = function(socket, io){
   //////       tournement matching    /////////////////////
   /////////////////////////////////////////////////////////
 
+  var getUser = function(username){
+    return Q.nbind(User.findOne, User)({username: username});
+  };
+
+  var matchCompetitors = function(){
+    if (tournamentPool.length <= 1){
+      // if not enough competitors, return and wait for new users to join
+      return false;
+    }
+    // try to find the most even match
+  };
+
+  // poll matchCompetitors
+  setInterval(matchCompetitors, 5000);
+
   socket.on('joinTournament', function(userData){
     var userId = socketList[userData.user];
-    tournamentPool[username] = socket.id;
 
-    console.log(tournamentPool)
-    io.sockets.connected[userId].emit('message', tournamentPool);
+    // store username in tournamentPool with user stats
+    getUser(username).then(function(user){
+      tournamentPool.push({
+        totalWins: user.totalWins,
+        currentStreak: user.currentStreak,
+        longestStreak: user.longestStreak,
+        username: username
+      });
+      
+      io.sockets.connected[userId].emit('message', tournamentPool);
+    });
+
 
   });
 
   socket.on('leaveTournament', function(userData){
     var userId = socketList[userData.user];
-    delete tournamentPool[username];
+    // initialize a new tournamentPool array without username
+    tournamentPool = tournamentPool.filter(function(user){
+      return user.username !== username;
+    })
 
     io.sockets.connected[userId].emit('message', tournamentPool);
   });
