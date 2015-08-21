@@ -1,15 +1,18 @@
 // requirements
 var BattleController = require('../battles/battleController');
+var _ = require('underscore');
+var User = require('../users/userModel.js');
+var Q    = require('q');
 
 var socketList = {};
+
+var tournamentPool = [];
 
 module.exports = function(socket, io){
   socket.join('dashboard');
 
   var username = socket.handshake.query.username;
   socketList[username] = socket.id;
-
-  console.log('LINE 11, DASBOARD HANDLER: ', username);
   
   // send signal that user has connected to dashboard
   var updateUsers = function(){
@@ -47,9 +50,96 @@ module.exports = function(socket, io){
     });
   });
 
+
+  /////////////////////////////////////////////////////////
+  //////       tournement matching    /////////////////////
+  /////////////////////////////////////////////////////////
+
+  var getUser = function(username){
+    return Q.nbind(User.findOne, User)({username: username});
+  };
+
+  var matchCompetitors = function(){
+    var maxDifference = 10;
+
+    // try to find the most even match
+    var newTournamentPool = tournamentPool.sort(function(a, b){
+      return b.totalWins - a.totalWins; // sort highest to lowest
+    }).filter(function(contender, idx, tournamentPool){
+      var nextContender = tournamentPool[idx + 1];
+
+      // if contender is already matched, don't add to newTournamentPool
+      if(contender.matched){ return false; }
+      // if next contender doesn't exist, don't compare
+      if(!nextContender){ return !contender.matched; }
+      // compare each contender to the next contender
+      if(contender.totalWins - nextContender.totalWins <= maxDifference){
+        // TODO: challenge level should not be hard coded
+        BattleController.addBattleRoom(8, function(roomhash) {
+          var contender1 = socketList[nextContender.username],
+              contender2 = socketList[contender.username];
+
+          // broadcast to each contender to prepareForBattle
+          console.log('Match between: ', contender.username, ' and ', nextContender.username, ': ', contender.totalWins - nextContender.totalWins);
+          socket.broadcast.to(contender1).emit('prepareForBattle', {roomhash: roomhash});
+          socket.broadcast.to(contender2).emit('prepareForBattle', {roomhash: roomhash});
+        });
+        // if matched, don't add to newTournamentPool
+        nextContender.matched = true;
+        return false;
+      }
+
+      // if not matched, add to newTournamentPool
+      return true;
+    });
+
+    // replace tournamentPool w/ newTournamentPool (which is missing all matched contenders)
+    tournamentPool = newTournamentPool;
+  };
+
+  // poll matchCompetitors
+  setInterval(matchCompetitors, 5000);
+
+  socket.on('joinTournament', function(userData){
+    var userId = socketList[userData.user];
+
+    // store username in tournamentPool with user stats
+    getUser(username).then(function(user){
+      tournamentPool.push({
+        totalWins: user.totalWins,
+        currentStreak: user.currentStreak,
+        longestStreak: user.longestStreak,
+        username: username,
+        matched: false
+      });
+    });
+
+
+  });
+
+  socket.on('leaveTournament', function(userData){
+    var userId = socketList[userData.user];
+    // initialize a new tournamentPool array without username
+    tournamentPool = tournamentPool.filter(function(user){
+      return user.username !== username;
+    })
+  });
+
+  socket.on('getTournamentStatus', function(response){
+    var userId = socketList[username];
+    var status = _.contains(_.pluck(tournamentPool, 'username'), username);
+    io.sockets.connected[userId].emit('returnTournamentStatus', status);
+  })
+
+
+  ////////////////////////////////////////////////////////
+  //             disconnect                             //
+  ////////////////////////////////////////////////////////
+
   socket.on('disconnect', function(){
     console.log('SERVER DISCONNECTing DASHBOARD SOCKET');
     delete socketList[username];
+    delete tournamentPool[username];
 
     setTimeout(function() {
       updateUsers();

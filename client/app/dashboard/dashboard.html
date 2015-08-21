@@ -15,8 +15,26 @@
         <p>Go to this url to face your opponent: <a ng-href="#/battle/{{ battleRoomHash }}">localhost:8000/#/battle/{{ battleRoomHash }}</a></p>
       </div>
 
+      <!-- tourney style -->
+      <div class="grid grid--l">
+        <div class="grid__item grid__item--25-l">
+          <div class="dashboard-stats-entry">
+            <h3 class="dashboard-stats-entry__title">Tournament</h3>
+            <div class="dashboard-stats-entry__body">
+              <p class="dashboard-stats-entry__stat">
+                <button ng-hide="joinedTournament" ng-click="joinTournament($event)" ng-disabled="joinedTournament === undefined">Join Tournament!</button>
+                <em ng-show="joinedTournament">...waiting...</em>
+                <button ng-show="joinedTournament" ng-click="leaveTournament($event)">Cancel</button>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <div class="dashboard-stats">
         <h1 class="dashboard-stats__title">Welcome back, {{ username }}!</h1>
+
 
         <div class="grid grid--l">
           <div class="grid__item grid__item--25-l">

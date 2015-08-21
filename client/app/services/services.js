@@ -152,6 +152,17 @@ angular.module('battlescript.services', [])
 })
 
 ////////////////////////////////////////////////////////////
+// Tournament factory
+// 
+// A set of reusable functions to handle Tournament functionality
+// on the dashboard
+////////////////////////////////////////////////////////////
+
+.factory('Tournament', function($rootScope){
+  // not implemented!!
+})
+
+////////////////////////////////////////////////////////////
 // Notifications factory
 // 
 // A set of reusable functions to handle user notifications

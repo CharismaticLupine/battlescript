@@ -17,6 +17,7 @@ angular.module('battlescript.dashboard', [])
   $scope.leaderboard = [];
   $scope.challengeClicked = {};
 
+
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
   ////////////////////////////////////////////////////////////
@@ -46,9 +47,6 @@ angular.module('battlescript.dashboard', [])
 
   $rootScope.dashboardSocket.on('updateUsers', function(data) {
     //TODO: Online users.
-
-    console.log('NEED TO UPDATE USERS CUZ OF SOME EVENT');
-    console.log(data);
 
     if (data[$scope.username]) {
       delete data[$scope.username];
@@ -85,11 +83,43 @@ angular.module('battlescript.dashboard', [])
     Users.getLeaderboard()
       .then(function(leaderboard){ 
         $scope.leaderboard = leaderboard.data;
-        console.log($scope.leaderboard);
       });
   }
 
   $scope.getLeaderboard();
+
+  ////////////////////////////////////////////////////////////
+  // handle tournament requests
+  ////////////////////////////////////////////////////////////
+
+  // initialize joinedTournament as undefined, then ask server if it is true/false
+  $scope.joinedTournament = undefined;
+
+  $rootScope.dashboardSocket.emit('getTournamentStatus')
+  $rootScope.dashboardSocket.on('returnTournamentStatus', function(status){
+    $scope.$apply(function(){
+      $scope.joinedTournament = status;
+    });
+  });
+
+
+  $scope.joinTournament = function($event){
+    $event.preventDefault();
+    $scope.joinedTournament = true;
+
+    $rootScope.dashboardSocket.emit('joinTournament', {
+      user: $scope.username
+    });
+  };
+
+  $scope.leaveTournament = function($event){
+    $event.preventDefault();
+    $scope.joinedTournament = false;
+
+    $rootScope.dashboardSocket.emit('leaveTournament', {
+      user: $scope.username
+    });
+  };
 
   ////////////////////////////////////////////////////////////
   // handle battle requests
