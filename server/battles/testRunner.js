@@ -28,8 +28,14 @@ module.exports = function(code, testCode){
   //need to attach output to the global object so the testframework can generate output
   global.output = [];
   var log = captureStdout(function(){
-    __vm.runInThisContext(code);
-    __vm.runInThisContext(testCode);
+    try { 
+      __vm.runInThisContext(code);
+      __vm.runInThisContext(testCode);
+
+      
+    } catch (e){
+      console.log(e);
+    }
   });
   
   return {testResults: output, codelog: log};
