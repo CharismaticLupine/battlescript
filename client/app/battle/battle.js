@@ -269,6 +269,7 @@ angular.module('battlescript.battle', [])
       $timeout(function() {
         $scope.userEditor.setValue($scope.battle.session.setup);
         $scope.opponentEditor.setValue($scope.battle.session.setup);
+        $scope.testEditor.setValue($scope.battle.session.exampleFixture);
         $scope.$apply();
       }, 50);
 
