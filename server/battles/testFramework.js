@@ -434,10 +434,7 @@ try
         writable: false,
         value: Test.after
     })
-    Object.defineProperty(global, 'expect', {
-        writable: false,
-        value: Test.expect
-    })
+    
    
 
 
