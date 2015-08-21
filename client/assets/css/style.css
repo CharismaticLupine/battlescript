@@ -56,7 +56,7 @@ body {
 
 body {
   color: #777;
-  background-color: #2B3A42;
+  background-color: #2D5D78;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   line-height: 1.8;
@@ -86,12 +86,12 @@ h6 {
   
 ----------------------------------------------------------------------------- */
 a {
-  color: #EB7F00;
+  color: #E14C55;
   text-decoration: none;
 }
 
 a:hover {
-  color: #854800;
+  color: #aa1d25;
 }
 
 b,
@@ -143,10 +143,6 @@ input:focus,
 textarea:focus,
 button:focus {
   outline: none;
-}
-
-button:disabled {
-  opacity: 0.3;
 }
 
 /* -----------------------------------------------------------------------------
@@ -325,7 +321,7 @@ button:disabled {
 ----------------------------------------------------------------------------- */
 .header {
   padding: 24px 0;
-  background-color: #2B3A42;
+  background-color: #2D5D78;
 }
 
 .header__inner {
@@ -394,17 +390,17 @@ button:disabled {
 }
 
 .nav__link--alt {
-  color: #EB7F00;
+  color: #E14C55;
 }
 
 .nav__link:hover {
-  color: #EB7F00;
+  color: #E14C55;
   background-color: #fff;
 }
 
 .nav__link--alt:hover {
   color: #fff;
-  background-color: #EB7F00;
+  background-color: #E14C55;
 }
 
 @media all and (min-width: 600px) {
@@ -430,7 +426,7 @@ button:disabled {
  */
 .header-main {
   padding: 12px 0;
-  background-color: #2B3A42;
+  background-color: #2D5D78;
 }
 
 .header-main__inner {
@@ -474,7 +470,7 @@ button:disabled {
 
 .header-main__user-name {
   margin: 0;
-  color: #EB7F00;
+  color: #E14C55;
   font-weight: 300;
 }
 
@@ -524,7 +520,7 @@ button:disabled {
 
 .header-main__user-dropdown-item a:hover {
   color: #fff;
-  background-color: #EB7F00;
+  background-color: #E14C55;
 }
 
 /* hover state */
@@ -617,7 +613,7 @@ button:disabled {
 .auth__message {
   margin: 12px 0;
   padding: 12px;
-  color: #EB7F00;
+  color: #E14C55;
   border: solid 1px #3F5765;
 }
 
@@ -628,7 +624,7 @@ button:disabled {
 
 .auth-form__title {
   margin: 0 0 24px 0;
-  color: #EB7F00;
+  color: #E14C55;
   font-weight: 400;
   text-align: center;
 }
@@ -667,7 +663,7 @@ button:disabled {
 }
 
 .auth-form__group > input:focus {
-  box-shadow: 0 0 0 4px #2B3A42;
+  box-shadow: 0 0 0 4px #2D5D78;
 }
 
 .auth-form__footer {
@@ -716,7 +712,7 @@ button:disabled {
 
 .dashboard-stats__title {
   margin-bottom: 24px;
-  color: #EB7F00;
+  color: #E14C55;
   font-size: 28px;
   font-weight: 400;
 }
@@ -725,7 +721,7 @@ button:disabled {
 .dashboard-stats-entry__title {
   padding: 12px;
   color: #fff;
-  background-color: #EB7F00;
+  background-color: #E14C55;
   font-size: 12px;
   font-weight: 400;
 }
@@ -736,7 +732,7 @@ button:disabled {
 }
 
 .dashboard-stats-entry__stat > span {
-  color: #EB7F00;
+  color: #E14C55;
 }
 
 .dashboard-stats__streak {
@@ -745,7 +741,7 @@ button:disabled {
 }
 
 .dashboard-stats__streak > span {
-  color: #EB7F00;
+  color: #E14C55;
 }
 
 /* leaderboard */
@@ -812,11 +808,11 @@ button:disabled {
 
 /* code mirror theme overrides */
 .cm-s-material {
-  background-color: #2B3A42;
+  background-color: #2D5D78;
 }
 
 .cm-s-material .CodeMirror-gutters {
-  background: #2B3A42;
+  background: #2D5D78;
 }
 
 /* -----------------------------------------------------------------------------
@@ -851,7 +847,7 @@ button:disabled {
 }
 
 .battle-waiting__timer span {
-  color: #EB7F00;
+  color: #E14C55;
 }
 
 .battle-waiting__loading {
@@ -883,7 +879,7 @@ button:disabled {
 
 .battle-field__header p {
   margin: 0;
-  color: #EB7F00;
+  color: #E14C55;
   font-size: 22px;
 }
 
@@ -976,7 +972,7 @@ button:disabled {
 .battle-notices__heading {
   padding: 8px;
   color: #fff;
-  background-color: #EB7F00;
+  background-color: #E14C55;
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
@@ -984,7 +980,7 @@ button:disabled {
 
 .battle-notices__notes {
   padding: 8px;
-  border: solid 1px #EB7F00;
+  border: solid 1px #E14C55;
 }
 
 /* -----------------------------------------------------------------------------
@@ -1002,20 +998,20 @@ button:disabled {
 }
 
 .btn--primary:not(:disabled):hover {
-  background-color: #2B3A42;
+  background-color: #2D5D78;
 }
 
 .btn--primary.active {
-  background-color: #EB7F00;
+  background-color: #E14C55;
 }
 
 .btn--secondary {
   color: #fff;
-  background-color: #EB7F00;
+  background-color: #E14C55;
 }
 
 .btn--secondary:not(:disabled):hover {
-  background-color: #854800;
+  background-color: #aa1d25;
 }
 
 .btn:disabled {
@@ -1043,10 +1039,6 @@ button:disabled {
 
 .btn:focus {
   outline: none;
-}
-
-.btn--readstate {
-  margin-bottom: 5px;
 }
 
 @media all and (min-width: 840px) {
@@ -1102,7 +1094,7 @@ button:disabled {
   bottom: 0;
   left: 0;
   z-index: 100;
-  background-color: #2B3A42;
+  background-color: #2D5D78;
 }
 
 .spinner-container.active {
@@ -1146,7 +1138,7 @@ button:disabled {
 .spinner::after {
   width: 24px;
   height: 24px;
-  background-color: #EB7F00;
+  background-color: #E14C55;
   border-radius: 18px;
 }
 
@@ -1170,100 +1162,4 @@ button:disabled {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
-}
-
-
-
-/* -----------------------------------------------------------------------------
-
-  COLLABORATION TEXT AREA
-  
------------------------------------------------------------------------------ */
-
-.firepad-userlist {
-    /* default height */
-    height: 600px;
-    min-width: 175px;
-
-    background: #2B3A42; /* Old browsers */
-    background: -moz-linear-gradient(left, #ebebeb 0%, #eaeaea 93%, #d9d9d9 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ebebeb), color-stop(93%,#eaeaea), color-stop(100%,#d9d9d9)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(left, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(left, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(left, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* IE10+ */
-    background: linear-gradient(to right, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* W3C */
-    color: #404040;
-  }
-
-  .firepad-userlist {
-    text-align: left;
-    font-family: 'Helvetica Neue', sans-serif;
-    line-height: normal;
-  }
-
-  .firepad-userlist-user {
-    position: relative;
-    margin: 3px 0;
-    height: 42px;
-    border-bottom: 1px solid #c9c9c9;
-    padding-bottom: 5px;
-  }
-
-  .firepad-userlist-color-indicator {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    border: 1px solid #ccc;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-  }
-
-  input.firepad-userlist-name-input {
-    position: absolute;
-    left: 38px;
-    top: 0;
-    width: 105px;
-    height: 20px;
-    border: 0;
-    border-bottom: 1px solid #d6d6d6;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    font-size: 14px;
-    line-height: 14px;
-    padding: 1px;
-  }
-
-  .firepad-userlist-name-hint {
-    position: absolute;
-    left: 38px;
-    top: 20px;
-    width: 300px; /* I'd rather it clip than wrap. */
-    font-size: 9px;
-    line-height: 14px;
-  }
-
-  .firepad-userlist-name {
-    position: absolute;
-    top: 2px;
-    left: 38px;
-    width: 95px;
-    font-size: 13px;
-  }
-
-  #firepad-container .firepad .CodeMirror.cm-s-default{
-    position: relative;
-    height: 600px;
-    width: 400px;
-    width: calc(100% - 175px);
-  }
-
-  #userlist {
-    float: left;
-    width: 175px;
-  }
-
-.collab {
-  overflow: auto;
 }
