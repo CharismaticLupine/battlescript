@@ -15,25 +15,8 @@
         <p>Go to this url to face your opponent: <a ng-href="#/battle/{{ battleRoomHash }}">localhost:8000/#/battle/{{ battleRoomHash }}</a></p>
       </div>
 
-      <!-- tourney style -->
-      <div class="grid grid--l">
-        <div class="grid__item grid__item--25-l">
-          <div class="dashboard-stats-entry">
-            <h3 class="dashboard-stats-entry__title">Tournament</h3>
-            <div class="dashboard-stats-entry__body">
-              <p class="dashboard-stats-entry__stat">
-                <button ng-hide="joinedTournament" ng-click="joinTournament($event)" ng-disabled="joinedTournament === undefined">Join Tournament!</button>
-                <em ng-show="joinedTournament">...waiting...</em>
-                <button ng-show="joinedTournament" ng-click="leaveTournament($event)">Cancel</button>
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
       <div class="dashboard-stats">
-        <h1 class="dashboard-stats__title">Welcome back, {{ username }}!</h1>
+        <h1 class="dashboard-stats__title">Welcome back, {{ username }}</h1>
 
 
         <div class="grid grid--l">
@@ -74,41 +57,84 @@
 
 
       <div class="grid grid--l">
-        <div class="grid__item grid__item--50-l">
-          <div class="dashboar-widget dashboard-leaderboard">
-            <h2 class="dashboar-widget__title">Leaderboard</h2>
-             <ul class="dashboard-online__list">
-              <li class="dashboard-online__item" ng-repeat="user in leaderboard">
-                <span>{{ user.username }}</span>
-                <span>{{ user.totalWins }}</span>
-              </li>
-            </ul>
-          </div><!-- /dashboar widget -->
-        </div><!-- /grid item -->
-        <div class="grid__item grid__item--25-l">
-          <div class="dashboar-widget dashboard-online">
-            <h2 class="dashboar-widget__title">Online Now</h2>
-            <ul class="dashboard-online__list">
-              <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
-                <span>{{ key }}</span>
-                <span><a href="#" ng-click="requestBattle($event, key)" ng-hide="challengeClicked[key]">Challenge?</a></span>
-                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
-              </li>
-            </ul>
-          </div><!-- /dashboar widget -->
-        </div><!-- /grid item -->
         <div class="grid__item grid__item--25-l">
           <div class="dashboard-stats-entry">
             <h3 class="dashboard-stats-entry__title">Challenge Your friend</h3>
             <div class="dashboard-stats-entry__body">
               <p class="dashboard-stats-entry__stat">
                 <input class="challenge-input" type="text" placeholder="enter a username" ng-model="pickOpponent"/>
-                <button ng-click="requestBattle($event, pickOpponent)">Challenge Them!</button>
+                <button class="battle-submit" ng-click="requestBattle($event, pickOpponent)">Challenge</button>
               </p>
             </div>
           </div>
         </div>
+
+        <!-- tourney style -->
+        <div class="grid__item grid__item--25-l">
+          <div class="dashboard-stats-entry">
+            <h3 class="dashboard-stats-entry__title">Tournament</h3>
+            <div class="dashboard-stats-entry__body">
+              <p class="dashboard-stats-entry__stat">
+                <button ng-hide="joinedTournament" ng-click="joinTournament($event)" ng-disabled="joinedTournament === undefined">Join Tournament!</button>
+                <em ng-show="joinedTournament">...waiting...</em>
+                <button ng-show="joinedTournament" ng-click="leaveTournament($event)">Cancel</button>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid__item grid__item--50-l">
+          <div class="dashboar-widget dashboard-online">
+            <h2 class="dashboar-widget__title">Online Now</h2>
+            <ul class="dashboard-online__list">
+              <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
+                <span>{{ key }}</span>
+                <span class="challenge"><a href="#" ng-click="requestBattle($event, key)" ng-hide="challengeClicked[key]">Challenge</a></span>
+                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Challenged!</span>
+              </li>
+              <li class="dashboard-online__item">
+                <span class="username">DonaldTrumpsHairCut</span>
+                <em class="challenge">Challenge</em>
+                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
+              </li>
+              <li class="dashboard-online__item">
+                <span class="username">Mr. Timothy Quach</span>
+                <em class="challenge">Challenge</em>
+                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
+              </li>
+              <li class="dashboard-online__item">
+                <span class="username">Ke$ha</span>
+                <em class="challenge">Challenge</em>
+                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
+              </li>
+              <li class="dashboard-online__item">
+                <span class="username">ILoveNickelback</span>
+                <em class="challenge">Challenge</em>
+                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
+              </li>
+              <li class="dashboard-online__item">
+                <span class="username">ILoveNickelbackMore</span>
+                <em class="challenge">Challenge</em>
+                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
+              </li>
+            </ul>
+          </div><!-- /dashboar widget -->
+        </div><!-- /grid item -->
+
       </div><!-- /grid -->
+      <div class="grid grid--l">
+          <div class="grid__item grid__item--100-l">
+            <div class="dashboar-widget dashboard-leaderboard">
+              <h2 class="dashboar-widget__title">Leaderboard</h2>
+               <ul class="dashboard-online__list">
+                <li class="dashboard-online__item" ng-repeat="user in leaderboard">
+                  <span>{{ user.username }}</span>
+                  <span>{{ user.totalWins }}</span>
+                </li>
+              </ul>
+            </div><!-- /dashboar widget -->
+          </div><!-- /grid item -->
+      </div>
 
     </div><!-- dashboard -->
   </div><!-- /container -->
