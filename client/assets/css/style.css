@@ -772,6 +772,16 @@ button:focus {
           flex: 1;
 }
 
+.challenge {
+  text-align: right;
+}
+.challenge-input {
+  padding: 3px;
+}
+.battle-submit {
+  float: right;
+}
+
 /* notifications */
 .dashboard-notification {
   position: fixed;
