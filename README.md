@@ -4,9 +4,9 @@ BattleScript
 
 ## Team
 
-  - __Product Owner__: Adam Ellsworth
-  - __Scrum Master__: Nick Salloum
-  - __Development Team Members__: Eric Le, Omar Shaikh
+  - __Product Owner__: Rob Rodriguez
+  - __Scrum Master__: Timothy Quach
+  - __Development Team Members__: Matthieu Faugere, James Conkling
 
 ## Table of Contents
 
