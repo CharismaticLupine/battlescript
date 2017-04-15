@@ -3,6 +3,7 @@ module.exports = function(socket, io) {
   var username = socket.handshake.query.username;
   var roomhash = socket.handshake.query.roomhash;
   var room = roomModel.createOrGetRoom(roomhash);
+  room.maxOccupancy = 100;
 
   var addUserToRoom = function() {
     room.users.push(username);

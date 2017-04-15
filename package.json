@@ -8,10 +8,15 @@
     "Omar Shaikh <oshaikh13@gmail.com>",
     "Eric Le <hle2806@uw.edu>"
   ],
+  "scripts": {
+  "start": "node server/server.js",
+  "postinstall": "bower install"
+  },
   "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.4.3",
+    "bower": "^1.4.1",
     "crypto": "0.0.3",
     "dotenv": "^1.2.0",
     "express": "^4.13.2",
@@ -32,5 +37,9 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.4",
     "gulp-util": "^3.0.6"
-  }
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "bower_components"
+  ]
 }

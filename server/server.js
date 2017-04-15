@@ -1,19 +1,20 @@
-// load .env as soon as possible
-require('dotenv').load();
-
 // boot up express express and mongoose
 var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
 var server = require('http').Server(app);
+var env = process.env.NODE_ENV;
 
-mongoose.connect('mongodb://localhost/battlescript');
+if (env === 'development') {
+  require('dotenv').load();
+}
+
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/meals-development');
 
 // configure our server with all the middleware and and routing
 require('./config/middleware.js')(app, express);
 
-// listen on port 8000
-server.listen(8000);
+server.listen(process.env.PORT || 3000);
 
 ////////////////////////////////////////////////////////////
 // init socket stuff
